@@ -1,6 +1,10 @@
 "use server";
 
+import { neon } from "@neondatabase/serverless";
 import { SearchResponse } from "../types/search";
+
+// Create the database connection
+const sql = neon(process.env.DATABASE_URL!);
 
 export async function performSearch(query: string): Promise<SearchResponse> {
   if (!query.trim()) {
@@ -45,6 +49,23 @@ export async function performSearch(query: string): Promise<SearchResponse> {
       console.error("Unexpected API response structure:", data);
       throw new Error("Unexpected API response structure");
     }
+
+    // Extract DOIs from the Nomic API response
+    const dois = data.data.map((item: { doi: string }) => item.doi);
+
+    // Fetch matching records from PostgreSQL
+    const dbResults = await sql`
+      SELECT *
+      FROM public.orchard
+      WHERE doi = ANY(${dois});
+    `;
+
+    // Reorder dbResults to have the same order of DOIs as in the 'dois' array
+    const orderedDbResults = dois.map((doi: string) =>
+      dbResults.find((result) => result.doi === doi)
+    );
+
+    console.log("Structure of orderedDbResults:", orderedDbResults[0]);
 
     return { results: data.data };
   } catch (error) {
