@@ -1,6 +1,10 @@
 import { SearchResponse } from "../types/search";
 import { ResearchCard } from "@/components/ui/research-card";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+
+const ITEMS_PER_PAGE = 20;
 
 export default function SearchResults({
   results,
@@ -9,6 +13,19 @@ export default function SearchResults({
   results: SearchResponse | null;
   isLoading: boolean;
 }) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [results]);
+
+  const handlePageChange = (newPage: number) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (newPage !== currentPage) {
+      setCurrentPage(newPage);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-8">
@@ -33,13 +50,25 @@ export default function SearchResults({
     );
   }
 
+  const totalPages = Math.ceil(results.results.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentResults = results.results.slice(startIndex, endIndex);
+
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Search Results</h2>
+      <div className="mb-4">
+        <h2 className="text-2xl font-bold">Search Results</h2>
+        <p className="text-sm text-gray-600 mt-1">
+          Showing {startIndex + 1}-{Math.min(endIndex, results.results.length)}{" "}
+          of {results.results.length} results
+        </p>
+      </div>
+
       <div className="space-y-4">
-        {results.results.map((result, index) => (
+        {currentResults.map((result, index) => (
           <ResearchCard
-            key={index}
+            key={`${result.doi}-${index}`}
             doi={result.doi}
             title={result.title}
             authors={result.authors}
@@ -57,6 +86,28 @@ export default function SearchResults({
           />
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-6">
+          <Button
+            variant="outline"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </Button>
+          <span className="flex items-center px-4">
+            Page {currentPage} of {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
