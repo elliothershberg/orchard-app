@@ -67,7 +67,7 @@ export async function performSearch(query: string): Promise<SearchResponse> {
 
     console.log("Structure of orderedDbResults:", orderedDbResults[0]);
 
-    return { results: data.data };
+    return { results: orderedDbResults };
   } catch (error) {
     console.error("Search error:", error);
     return {

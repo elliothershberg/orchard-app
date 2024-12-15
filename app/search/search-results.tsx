@@ -1,5 +1,5 @@
-import { SearchResponse, SearchResult } from "../types/search";
-import Link from "next/link";
+import { SearchResponse } from "../types/search";
+import { ResearchCard } from "@/components/ui/research-card";
 
 export default async function SearchResults({
   searchAction,
@@ -25,23 +25,27 @@ export default async function SearchResults({
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold mb-4">Search Results</h2>
-      <ul className="space-y-2">
-        {results.map((result: SearchResult, index: number) => (
-          <li
+      <div className="space-y-4">
+        {results.map((result, index) => (
+          <ResearchCard
             key={index}
-            className="p-4 border border-gray-200 rounded-lg hover:border-[#bc2635] transition-colors"
-          >
-            <Link
-              href={`https://doi.org/${result.doi}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-black hover:text-[#bc2635] transition-colors"
-            >
-              {result.doi}
-            </Link>
-          </li>
+            doi={result.doi}
+            title={result.title}
+            authors={result.authors}
+            author_corresponding={result.author_corresponding}
+            author_corresponding_institution={
+              result.author_corresponding_institution
+            }
+            date={result.date}
+            category={result.category}
+            abstract={result.abstract}
+            published={result.published}
+            topic_depth_1={result.topic_depth_1}
+            topic_depth_2={result.topic_depth_2}
+            topic_depth_3={result.topic_depth_3}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
