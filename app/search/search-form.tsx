@@ -57,8 +57,9 @@ export default function SearchForm({
           </PopoverTrigger>
           <PopoverContent className="w-80">
             <p>
-              Search the oRchard for topics, ideas, or specific content. Use
-              keywords for better results.
+              Search the oRchard for topics, ideas, or specific content. The
+              results are the top 100 most related preprints from a vector
+              search across all of bioRxiv.
             </p>
           </PopoverContent>
         </Popover>
