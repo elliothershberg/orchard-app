@@ -20,10 +20,10 @@ export default function SearchResults({
   }, [results]);
 
   const handlePageChange = (newPage: number) => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    if (newPage !== currentPage) {
-      setCurrentPage(newPage);
-    }
+    setCurrentPage(newPage);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   };
 
   if (isLoading) {
