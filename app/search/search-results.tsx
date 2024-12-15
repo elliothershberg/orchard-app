@@ -1,20 +1,31 @@
 import { SearchResponse } from "../types/search";
 import { ResearchCard } from "@/components/ui/research-card";
+import { Loader2 } from "lucide-react";
 
-export default async function SearchResults({
-  searchAction,
-  query,
+export default function SearchResults({
+  results,
+  isLoading,
 }: {
-  searchAction: (query: string) => Promise<SearchResponse>;
-  query: string;
+  results: SearchResponse | null;
+  isLoading: boolean;
 }) {
-  const { results, error } = await searchAction(query);
-
-  if (error) {
-    return <p className="text-[#bc2635] text-center">{error}</p>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-8">
+        <Loader2 className="h-8 w-8 animate-spin text-[#bc2635]" />
+      </div>
+    );
   }
 
-  if (!results || results.length === 0) {
+  if (!results) {
+    return null;
+  }
+
+  if (results.error) {
+    return <p className="text-[#bc2635] text-center">{results.error}</p>;
+  }
+
+  if (!results.results || results.results.length === 0) {
     return (
       <p className="text-center text-gray-600">
         No results found for your query.
@@ -26,7 +37,7 @@ export default async function SearchResults({
     <div className="space-y-4">
       <h2 className="text-2xl font-bold mb-4">Search Results</h2>
       <div className="space-y-4">
-        {results.map((result, index) => (
+        {results.results.map((result, index) => (
           <ResearchCard
             key={index}
             doi={result.doi}

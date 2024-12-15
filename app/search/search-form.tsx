@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -10,15 +9,19 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { Loader2 } from "lucide-react";
 
 export default function SearchForm({
   initialQuery = "",
+  onSearch,
+  isLoading,
 }: {
   initialQuery: string;
+  onSearch: (query: string) => Promise<void>;
+  isLoading: boolean;
 }) {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [textareaHeight, setTextareaHeight] = useState("40px");
-  const router = useRouter();
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setSearchQuery(e.target.value);
@@ -27,13 +30,13 @@ export default function SearchForm({
     setTextareaHeight(`${e.target.scrollHeight}px`);
   };
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
+    onSearch(searchQuery);
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex items-start space-x-2 mb-8">
+    <form onSubmit={handleSubmit} className="flex items-start space-x-2 mb-8">
       <div className="relative flex-grow">
         <Textarea
           placeholder="Enter your search query"
@@ -62,10 +65,10 @@ export default function SearchForm({
       </div>
       <Button
         type="submit"
-        disabled={!searchQuery.trim()}
+        disabled={!searchQuery.trim() || isLoading}
         className="bg-[#bc2635] text-white hover:bg-[#a61f2d] disabled:bg-gray-300"
       >
-        Search
+        {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Search"}
       </Button>
     </form>
   );

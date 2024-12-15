@@ -1,14 +1,11 @@
-import { Suspense } from "react";
-import SearchForm from "./search-form";
-import SearchResults from "./search-results";
-import { performSearch } from "../actions/search";
+import SearchContent from "./search-content";
 
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string }>;
+  searchParams: { query?: string };
 }) {
-  const query = (await searchParams).query || "";
+  const query = searchParams.query || "";
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-white p-4 text-black">
@@ -17,13 +14,7 @@ export default async function SearchPage({
           Search the oRchard
         </h1>
 
-        <SearchForm initialQuery={query} />
-
-        <Suspense fallback={<div className="mt-8 text-center">Loading...</div>}>
-          {query && (
-            <SearchResults searchAction={performSearch} query={query} />
-          )}
-        </Suspense>
+        <SearchContent initialQuery={query} />
       </div>
     </main>
   );
