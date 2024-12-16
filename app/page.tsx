@@ -19,8 +19,11 @@ export default function Home() {
           >
             <Link href="/search">Search the oRchard</Link>
           </Button>
-          <Button className="w-full sm:w-auto sm:flex-1 bg-[#bc2635] text-white hover:bg-[#a61f2d]">
-            Scan the oRchard
+          <Button
+            asChild
+            className="w-full sm:w-auto sm:flex-1 bg-[#bc2635] text-white hover:bg-[#a61f2d]"
+          >
+            <Link href="/scan">Scan the oRchard</Link>
           </Button>
           <Button
             variant="outline"
