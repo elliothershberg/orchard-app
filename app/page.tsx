@@ -41,6 +41,18 @@ export default function Home() {
             About
           </Link>
         </div>
+
+        <div className="grid gap-4">
+          <Link
+            href="/fruit-network"
+            className="card hover:bg-accent/50 transition-colors"
+          >
+            <h2 className="text-xl font-semibold">Fruit Network →</h2>
+            <p>
+              Explore an interactive network of fruits and their relationships.
+            </p>
+          </Link>
+        </div>
       </div>
     </main>
   );
