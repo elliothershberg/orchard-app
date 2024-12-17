@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 
 const Scatterplot: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [, setScatterplot] = useState<any>(null);
 
   useEffect(() => {
     const initScatterplot = async () => {
@@ -25,8 +24,6 @@ const Scatterplot: React.FC = () => {
         pointColor: [0, 0, 0, 1],
         backgroundColor: [1, 1, 1, 1],
       });
-
-      setScatterplot(newScatterplot);
 
       const points = new Array(10000)
         .fill(0)
