@@ -8,7 +8,7 @@ export default function OrchardDisplay({ data }: { data: SearchResult[] }) {
   return (
     <div className="w-full flex gap-4 h-[calc(100vh-2rem)]">
       <div className="w-1/3 overflow-y-auto space-y-4 p-4">
-        {data.map((paper) => (
+        {data.slice(0, 10).map((paper) => (
           <ResearchCard
             key={paper.doi}
             doi={paper.doi}
@@ -29,7 +29,7 @@ export default function OrchardDisplay({ data }: { data: SearchResult[] }) {
         ))}
       </div>
       <div className="w-2/3 h-full">
-        <Scatterplot />
+        <Scatterplot data={data} />
       </div>
     </div>
   );
