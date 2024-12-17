@@ -19,7 +19,9 @@ export default async function ScanPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-8 bg-white">
-      <OrchardDisplay data={records.results} />
+      <div className="w-full">
+        <OrchardDisplay data={records.results} />
+      </div>
     </main>
   );
 }
