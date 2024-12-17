@@ -12,8 +12,10 @@ const Scatterplot: React.FC = () => {
 
       const { default: createScatterplot } = await import("regl-scatterplot");
       const canvas = canvasRef.current;
-      const { width, height } = canvas.getBoundingClientRect();
-      console.log("width, height:", width, height);
+      const parent = canvas.parentElement;
+      if (!parent) return;
+
+      const { width, height } = parent.getBoundingClientRect();
 
       const newScatterplot = createScatterplot({
         canvas,
@@ -27,7 +29,7 @@ const Scatterplot: React.FC = () => {
       setScatterplot(newScatterplot);
 
       const points = new Array(10000)
-        .fill()
+        .fill(0)
         .map(() => [
           -1 + Math.random() * 2,
           -1 + Math.random() * 2,
@@ -36,19 +38,19 @@ const Scatterplot: React.FC = () => {
 
       newScatterplot.draw(points);
 
-      const handleResize = () => {
-        const { width, height } = canvas.getBoundingClientRect();
-        newScatterplot.resize({ width, height });
-      };
+      const resizeObserver = new ResizeObserver((entries) => {
+        const { width, height } = entries[0].contentRect;
+        newScatterplot.set({ width, height });
+      });
 
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+      resizeObserver.observe(parent);
+      return () => resizeObserver.disconnect();
     };
 
     initScatterplot();
   }, []);
 
-  return <canvas ref={canvasRef} style={{ width: "100%", height: "400px" }} />;
+  return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
 };
 
 export default Scatterplot;

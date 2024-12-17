@@ -5,7 +5,7 @@ import Scatterplot from "@/components/ui/scatterplot";
 
 export default function OrchardDisplay({ data }: { data: SearchResult[] }) {
   return (
-    <div className="w-full flex gap-4">
+    <div className="w-full flex gap-4 h-[calc(100vh-2rem)]">
       <div className="w-1/3">
         {data.map((node) => (
           <div key={node.doi} className="p-4 mb-4 bg-gray-100 rounded shadow">
@@ -13,7 +13,7 @@ export default function OrchardDisplay({ data }: { data: SearchResult[] }) {
           </div>
         ))}
       </div>
-      <div className="w-2/3">
+      <div className="w-2/3 h-full">
         <Scatterplot />
       </div>
     </div>
