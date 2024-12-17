@@ -33,8 +33,17 @@ const Scatterplot: React.FC = () => {
         .map(() => [
           -1 + Math.random() * 2,
           -1 + Math.random() * 2,
-          Math.random() < 0.1 ? [0.737, 0.149, 0.208, 1] : [0, 0, 0, 1],
+          Math.random() < 0.1 ? 1 : 0,
+          1,
         ]);
+
+      newScatterplot.set({
+        colorBy: "valueA",
+        pointColor: [
+          [0.737, 0.149, 0.208, 1],
+          [0, 0, 0, 1],
+        ],
+      });
 
       newScatterplot.draw(points);
 
