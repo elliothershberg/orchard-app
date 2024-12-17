@@ -11,6 +11,8 @@ export interface SearchResult {
   topic_depth_1: string;
   topic_depth_2: string;
   topic_depth_3: string;
+  x: number;
+  y: number;
 }
 
 export interface SearchResponse {
