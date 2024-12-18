@@ -28,6 +28,7 @@ const Scatterplot: React.FC<ScatterplotProps> = ({ data }) => {
         pointSize: 3,
         pointColor: [0, 0, 0, 1],
         backgroundColor: [1, 1, 1, 1],
+        showReticle: true,
       });
 
       // Format is [x, y, valueA, opacity]
