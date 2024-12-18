@@ -1,18 +1,16 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { SearchResult } from "@/app/types/search";
+import { OrchardProjection } from "@/app/types/search";
 
 interface ScatterplotProps {
-  data: SearchResult[];
+  data: OrchardProjection[];
 }
 
 const Scatterplot: React.FC<ScatterplotProps> = ({ data }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    console.log("Scatterplot received data:", data);
-
     const initScatterplot = async () => {
       if (!canvasRef.current) return;
 
@@ -32,27 +30,10 @@ const Scatterplot: React.FC<ScatterplotProps> = ({ data }) => {
         backgroundColor: [1, 1, 1, 1],
       });
 
-      // Transform the SearchResult data into the format expected by regl-scatterplot
-      const xValues = data.map((d) => d.x);
-      const yValues = data.map((d) => d.y);
-
-      // Find the data boundaries
-      const xMin = Math.min(...xValues);
-      const xMax = Math.max(...xValues);
-      const yMin = Math.min(...yValues);
-      const yMax = Math.max(...yValues);
-
-      // Add small padding to prevent points from sitting exactly on the edges
-      const padding = 0.05; // 5% padding
-      const xRange = (xMax - xMin) * (1 + padding);
-      const yRange = (yMax - yMin) * (1 + padding);
-      const xMid = (xMax + xMin) / 2;
-      const yMid = (yMax + yMin) / 2;
-
       // Format is [x, y, valueA, opacity]
       const points = data.map((result) => [
-        (result.x - xMid) / (xRange / 2), // normalize to [-1, 1] with padding
-        (result.y - yMid) / (yRange / 2), // normalize to [-1, 1] with padding
+        result.x,
+        result.y,
         0, // valueA - could be used for coloring based on some property
         1, // opacity
       ]);

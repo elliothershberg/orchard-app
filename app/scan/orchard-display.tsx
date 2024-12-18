@@ -1,10 +1,16 @@
 "use client";
 
-import { SearchResult } from "../types/search";
+import { OrchardProjection, SearchResult } from "../types/search";
 import Scatterplot from "@/components/ui/scatterplot";
 import { ResearchCard } from "@/components/ui/research-card";
 
-export default function OrchardDisplay({ data }: { data: SearchResult[] }) {
+export default function OrchardDisplay({
+  data,
+  projection,
+}: {
+  data: SearchResult[];
+  projection: OrchardProjection[];
+}) {
   return (
     <div className="w-full flex gap-4 h-[calc(100vh-2rem)]">
       <div className="w-1/3 overflow-y-auto space-y-4 p-4">
@@ -29,7 +35,7 @@ export default function OrchardDisplay({ data }: { data: SearchResult[] }) {
         ))}
       </div>
       <div className="w-2/3 h-full">
-        <Scatterplot data={data} />
+        <Scatterplot data={projection} />
       </div>
     </div>
   );

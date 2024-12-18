@@ -19,3 +19,13 @@ export interface SearchResponse {
   results: SearchResult[];
   error?: string;
 }
+
+export interface OrchardProjection {
+  x: number;
+  y: number;
+}
+
+export interface OrchardProjectionResponse {
+  results: OrchardProjection[];
+  error?: string;
+}
