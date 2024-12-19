@@ -4,11 +4,16 @@ import React, { useRef, useEffect } from "react";
 import { OrchardProjection } from "@/app/types/search";
 
 interface ScatterplotProps {
-  data: OrchardProjection[];
+  plotData: OrchardProjection[];
+  setSelectedPoints: (points: number[]) => void;
 }
 
-const Scatterplot: React.FC<ScatterplotProps> = ({ data }) => {
+const Scatterplot: React.FC<ScatterplotProps> = ({
+  plotData,
+  setSelectedPoints,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const scatterplotRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   useEffect(() => {
     const initScatterplot = async () => {
@@ -31,8 +36,21 @@ const Scatterplot: React.FC<ScatterplotProps> = ({ data }) => {
         showReticle: true,
       });
 
+      // Store the scatterplot instance
+      scatterplotRef.current = newScatterplot;
+
+      // Subscribe to selection events
+      newScatterplot.subscribe("select", ({ points }) => {
+        setSelectedPoints(points);
+      });
+
+      // Subscribe to deselection events
+      newScatterplot.subscribe("deselect", () => {
+        setSelectedPoints([]);
+      });
+
       // Format is [x, y, valueA, opacity]
-      const points = data.map((result) => [
+      const points = plotData.map((result) => [
         result.x,
         result.y,
         0, // valueA - could be used for coloring based on some property
@@ -55,11 +73,19 @@ const Scatterplot: React.FC<ScatterplotProps> = ({ data }) => {
       });
 
       resizeObserver.observe(parent);
-      return () => resizeObserver.disconnect();
+
+      // Cleanup function
+      return () => {
+        resizeObserver.disconnect();
+        if (scatterplotRef.current) {
+          scatterplotRef.current.destroy();
+          scatterplotRef.current = null;
+        }
+      };
     };
 
     initScatterplot();
-  }, [data]);
+  }, [plotData, setSelectedPoints]);
 
   return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
 };

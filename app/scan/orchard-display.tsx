@@ -1,16 +1,26 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { OrchardProjection, SearchResult } from "../types/search";
 import Scatterplot from "@/components/ui/scatterplot";
 import { ResearchCard } from "@/components/ui/research-card";
-
+import { getOrchardRecords } from "../actions/scan";
 export default function OrchardDisplay({
-  data,
   projection,
 }: {
-  data: SearchResult[];
   projection: OrchardProjection[];
 }) {
+  const [selectedPoints, setSelectedPoints] = useState<number[]>([]);
+  const [data, setData] = useState<SearchResult[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const records = await getOrchardRecords(selectedPoints);
+      setData(records.results);
+    };
+    fetchData();
+  }, [selectedPoints]);
+
   return (
     <div className="w-full flex gap-4 h-[calc(100vh-2rem)]">
       <div className="w-1/3 overflow-y-auto space-y-4 p-4">
@@ -35,7 +45,10 @@ export default function OrchardDisplay({
         ))}
       </div>
       <div className="w-2/3 h-full">
-        <Scatterplot data={projection} />
+        <Scatterplot
+          plotData={projection}
+          setSelectedPoints={setSelectedPoints}
+        />
       </div>
     </div>
   );
