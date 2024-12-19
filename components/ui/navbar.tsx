@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
 export function Navbar() {
+  const pathname = usePathname();
+
   return (
-    <nav className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-white shadow-sm w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
@@ -17,14 +22,18 @@ export function Navbar() {
             <Button
               asChild
               variant="ghost"
-              className="text-black hover:text-[#bc2635] hover:bg-gray-100"
+              className={`text-black hover:text-white hover:bg-[#bc2635] ${
+                pathname === "/search" ? "bg-[#bc2635] text-white" : ""
+              }`}
             >
               <Link href="/search">Search</Link>
             </Button>
             <Button
               asChild
               variant="ghost"
-              className="text-black hover:text-[#bc2635] hover:bg-gray-100"
+              className={`text-black hover:text-white hover:bg-[#bc2635] ${
+                pathname === "/scan" ? "bg-[#bc2635] text-white" : ""
+              }`}
             >
               <Link href="/scan">Scan</Link>
             </Button>
