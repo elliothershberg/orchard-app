@@ -10,11 +10,11 @@ export async function getOrchardRecords(
   selectedPoints: number[]
 ): Promise<SearchResponse> {
   console.log("selectedPoints: ", selectedPoints);
-  // TODO: filter by selected points
   const records = (await sql`
     SELECT *
     FROM public.orchard
-    ORDER BY doi
+    WHERE id = ANY(${selectedPoints})
+    ORDER BY id
     LIMIT 100
   `) as SearchResult[];
   return { results: records };

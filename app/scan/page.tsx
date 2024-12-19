@@ -9,7 +9,7 @@ async function getOrchardProjection(): Promise<OrchardProjectionResponse> {
   const projection = (await sql`
     SELECT x, y
     FROM public.orchard
-    ORDER BY doi
+    ORDER BY id
     LIMIT 100
   `) as OrchardProjection[]; // Limit to 100 points for development
   return { results: projection };
