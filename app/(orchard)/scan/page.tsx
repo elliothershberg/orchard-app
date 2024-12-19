@@ -19,8 +19,8 @@ export default async function ScanPage() {
   const projection = await getOrchardProjection();
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-8 bg-white">
-      <div className="w-full">
+    <main className="flex flex-col items-center p-8 bg-white h-[calc(100vh-4rem)]">
+      <div className="w-full h-full">
         <OrchardDisplay projection={projection.results} />
       </div>
     </main>

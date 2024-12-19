@@ -6,9 +6,9 @@ export default function OrchardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 pb-4">{children}</main>
+      <div className="flex-1 overflow-auto">{children}</div>
     </div>
   );
 }
