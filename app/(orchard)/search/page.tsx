@@ -1,4 +1,10 @@
 import SearchContent from "./search-content";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Search - oRchard",
+  description: "Search the oRchard",
+};
 
 export default async function SearchPage({
   searchParams,

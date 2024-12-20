@@ -1,6 +1,12 @@
 import { neon } from "@neondatabase/serverless";
 import OrchardDisplay from "./orchard-display";
 import { OrchardProjection, OrchardProjectionResponse } from "../types/search";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Scan - oRchard",
+  description: "Scan the oRchard",
+};
 
 // Create the database connection
 const sql = neon(process.env.DATABASE_URL!);
