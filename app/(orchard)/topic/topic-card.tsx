@@ -21,12 +21,12 @@ export default function TopicCard({
     <Card
       className={`group relative overflow-hidden border transition-all duration-200 ${
         isSelected
-          ? "border-primary bg-primary/5 shadow-sm ring-1 ring-primary/20"
-          : "border-border hover:border-primary/50 hover:shadow-md"
+          ? "border-[#bc2635] bg-[#bc2635]/5 shadow-sm ring-1 ring-[#bc2635]/20"
+          : "border-border hover:border-[#bc2635]/50 hover:shadow-md"
       }`}
     >
       <CardContent
-        className="pt-6 cursor-pointer space-y-4 hover:bg-accent/50 transition-colors"
+        className="pt-6 cursor-pointer space-y-4 hover:bg-gray-50 transition-colors"
         onClick={onClick}
       >
         <div className="flex items-start justify-between">
@@ -34,21 +34,16 @@ export default function TopicCard({
             <h2
               className={`text-xl font-semibold transition-colors ${
                 isSelected
-                  ? "text-primary"
-                  : "text-foreground group-hover:text-primary/80"
+                  ? "text-[#bc2635]"
+                  : "text-foreground group-hover:text-[#bc2635]/80"
               }`}
             >
               {title}
             </h2>
-            {showSpecificTopics && (
-              <p className="text-sm text-muted-foreground">
-                Click to view specific topics
-              </p>
-            )}
           </div>
           {isSelected ? (
-            <div className="rounded-full bg-primary/10 p-1.5">
-              <Check className="h-4 w-4 text-primary" />
+            <div className="rounded-full bg-[#bc2635]/10 p-1.5">
+              <Check className="h-4 w-4 text-[#bc2635]" />
             </div>
           ) : (
             <div className="rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -62,7 +57,7 @@ export default function TopicCard({
           <Button
             onClick={showSpecificTopics}
             variant={isSpecificTopicsShown ? "secondary" : "outline"}
-            className="w-full transition-colors hover:bg-primary/10 group"
+            className="w-full transition-colors hover:bg-[#bc2635]/10 group"
           >
             <span>
               {isSpecificTopicsShown

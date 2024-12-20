@@ -82,12 +82,6 @@ export default function TopicsPage() {
             <SelectItem value="specific">Specific Topics</SelectItem>
           </SelectContent>
         </Select>
-        <span className="text-sm sm:text-base text-muted-foreground">
-          Viewing:{" "}
-          <span className="font-medium text-foreground">
-            {topicType.charAt(0).toUpperCase() + topicType.slice(1)} Topics
-          </span>
-        </span>
       </div>
 
       <div className="rounded-xl border bg-card p-6 shadow-sm">
@@ -100,22 +94,22 @@ export default function TopicsPage() {
               variant="ghost"
               size="sm"
               onClick={() => setSelectedTopics([])}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-[#bc2635] hover:text-[#a61f2d] hover:bg-[#bc2635]/10"
             >
               Clear all
             </Button>
           )}
         </div>
-        <div className="bg-muted/50 p-4 rounded-lg min-h-[60px]">
+        <div className="bg-white border rounded-lg min-h-[60px] p-4">
           {selectedTopics.length > 0 ? (
             <ul className="list-none space-y-2">
               {selectedTopics.map((topic, index) => (
                 <li
                   key={index}
-                  className="group flex items-center justify-between gap-2 rounded-md px-2 py-1 hover:bg-accent/50"
+                  className="group flex items-center justify-between gap-2 rounded-md px-2 py-1 hover:bg-gray-50"
                 >
                   <div className="flex items-center gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
+                    <div className="h-1.5 w-1.5 rounded-full bg-[#bc2635]"></div>
                     <span className="text-sm font-medium">{topic}</span>
                   </div>
                   <Button
