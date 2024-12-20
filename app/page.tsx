@@ -26,10 +26,11 @@ export default function Home() {
             <Link href="/scan">Scan the oRchard</Link>
           </Button>
           <Button
+            asChild
             variant="outline"
             className="w-full sm:w-auto sm:flex-1 border-black text-black hover:bg-gray-100"
           >
-            Study a topic
+            <Link href="/topic">Study a topic</Link>
           </Button>
         </div>
 
