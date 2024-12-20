@@ -22,7 +22,10 @@ export default function SearchResults({
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
     requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const mainContent = document.querySelector("main");
+      if (mainContent) {
+        mainContent.scrollTo({ top: 0, behavior: "smooth" });
+      }
     });
   };
 
@@ -56,7 +59,7 @@ export default function SearchResults({
   const currentResults = results.results.slice(startIndex, endIndex);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 min-h-full pb-8">
       <div className="mb-4">
         <h2 className="text-2xl font-bold">Search Results</h2>
         <p className="text-sm text-gray-600 mt-1">
@@ -88,7 +91,7 @@ export default function SearchResults({
       </div>
 
       {totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-6">
+        <div className="flex justify-center gap-2 mt-8">
           <Button
             variant="outline"
             onClick={() => handlePageChange(currentPage - 1)}
@@ -96,7 +99,7 @@ export default function SearchResults({
           >
             Previous
           </Button>
-          <span className="flex items-center px-4">
+          <span className="flex items-center px-4 bg-white rounded-md border">
             Page {currentPage} of {totalPages}
           </span>
           <Button
