@@ -29,6 +29,19 @@ export default function SearchResults({
     });
   };
 
+  const handleDownload = () => {
+    const jsonString = JSON.stringify(results?.results || [], null, 2);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "search_results.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-8">
@@ -64,7 +77,15 @@ export default function SearchResults({
         <h2 className="text-2xl font-bold">Search Results</h2>
         <p className="text-sm text-gray-600 mt-1">
           Showing {startIndex + 1}-{Math.min(endIndex, results.results.length)}{" "}
-          of {results.results.length} results
+          of {results.results.length} results (
+          <button
+            onClick={handleDownload}
+            disabled={!results?.results?.length}
+            className="text-[#bc2635] hover:text-[#bc2635]/90 disabled:text-gray-400 disabled:hover:text-gray-400 font-normal"
+          >
+            download
+          </button>
+          )
         </p>
       </div>
 
