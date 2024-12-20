@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Orchard",
+  title: "oRchard",
   description: "Exponential knowledge, distilled",
 };
 
