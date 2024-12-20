@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/select";
 import TopicCard from "./topic-card";
 import SidePanel from "./side-panel";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 const broadTopics = [
   {
@@ -57,13 +59,22 @@ export default function TopicsPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-black">Research Topics</h1>
-      <div className="flex items-center space-x-4 mb-6">
+    <div className="container max-w-7xl mx-auto p-6 space-y-8">
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold tracking-tight text-foreground">
+          Research Topics
+        </h1>
+        <p className="text-muted-foreground text-lg">
+          Select topics to explore research areas
+        </p>
+      </div>
+
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
         <Select
+          defaultValue={topicType}
           onValueChange={(value) => setTopicType(value as "broad" | "specific")}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Select topic type" />
           </SelectTrigger>
           <SelectContent>
@@ -71,30 +82,62 @@ export default function TopicsPage() {
             <SelectItem value="specific">Specific Topics</SelectItem>
           </SelectContent>
         </Select>
-        <span className="text-lg font-semibold text-black">
+        <span className="text-sm sm:text-base text-muted-foreground">
           Viewing:{" "}
-          <span>
+          <span className="font-medium text-foreground">
             {topicType.charAt(0).toUpperCase() + topicType.slice(1)} Topics
           </span>
         </span>
       </div>
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-black mb-2">
-          Selected Topics
-        </h2>
-        <div className="bg-gray-100 p-4 rounded-lg min-h-[50px]">
+
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-foreground">
+            Selected Topics
+          </h2>
+          {selectedTopics.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSelectedTopics([])}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              Clear all
+            </Button>
+          )}
+        </div>
+        <div className="bg-muted/50 p-4 rounded-lg min-h-[60px]">
           {selectedTopics.length > 0 ? (
-            <ul className="list-disc list-inside">
+            <ul className="list-none space-y-2">
               {selectedTopics.map((topic, index) => (
-                <li key={index}>{topic}</li>
+                <li
+                  key={index}
+                  className="group flex items-center justify-between gap-2 rounded-md px-2 py-1 hover:bg-accent/50"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
+                    <span className="text-sm font-medium">{topic}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={() => handleTopicSelect(topic)}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </li>
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500 italic">Select topic(s)</p>
+            <p className="text-muted-foreground italic text-sm">
+              No topics selected
+            </p>
           )}
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {topicType === "broad"
           ? broadTopics.map((topic) => (
               <TopicCard
