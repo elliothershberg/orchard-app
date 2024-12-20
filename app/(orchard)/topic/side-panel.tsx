@@ -17,10 +17,10 @@ export default function SidePanel({ topic, onClose }: SidePanelProps) {
         className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
         onClick={onClose}
       />
-      <div className="fixed inset-y-0 right-0 w-96 bg-white border-l shadow-lg z-50 animate-in slide-in-from-right duration-300">
-        <div className="flex h-full flex-col">
-          <div className="flex items-center justify-between border-b p-6">
-            <div className="space-y-1">
+      <div className="fixed top-0 bottom-0 right-0 w-96 bg-white border-l shadow-lg z-50 animate-in slide-in-from-right duration-300">
+        <div className="flex flex-col h-full">
+          <div className="flex items-center justify-between border-b px-6 h-[72px]">
+            <div>
               <h3 className="text-2xl font-semibold text-foreground">
                 {topic.title}
               </h3>
@@ -35,7 +35,7 @@ export default function SidePanel({ topic, onClose }: SidePanelProps) {
             </Button>
           </div>
 
-          <ScrollArea className="flex-1 p-6">
+          <ScrollArea className="flex-1 px-6 py-4">
             <div className="space-y-6">
               <div>
                 <h4 className="text-sm font-medium text-[#bc2635] mb-4 tracking-wide">
