@@ -39,7 +39,7 @@ export default function OrchardDisplay({
   return (
     <div className="w-full flex gap-4 h-full">
       <div className="w-1/3 flex flex-col h-full">
-        <div className="px-4">
+        <div>
           <Button
             onClick={handleDownload}
             disabled={data.length === 0}
@@ -48,7 +48,7 @@ export default function OrchardDisplay({
             Download preprints
           </Button>
         </div>
-        <div className="overflow-y-auto space-y-4 p-4 flex-1">
+        <div className="overflow-y-auto space-y-4 pr-4 pt-4 flex-1">
           {selectedPoints.length === 0 ? (
             <div className="h-full bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
               <p className="max-w-xs text-center">

@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { OrchardProjection } from "@/app/types/search";
+import { OrchardProjection } from "@/app/(orchard)/types/search";
+import { Button } from "@/components/ui/button";
 
 interface ScatterplotProps {
   plotData: OrchardProjection[];
@@ -14,6 +15,18 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const scatterplotRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  const handleReset = () => {
+    if (scatterplotRef.current) {
+      scatterplotRef.current.reset();
+    }
+  };
+
+  const handleClearSelection = () => {
+    if (scatterplotRef.current) {
+      scatterplotRef.current.deselect();
+    }
+  };
 
   useEffect(() => {
     const initScatterplot = async () => {
@@ -87,7 +100,27 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
     initScatterplot();
   }, [plotData, setSelectedPoints]);
 
-  return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
+  return (
+    <div className="flex flex-col h-full gap-4">
+      <div className="flex gap-2">
+        <Button
+          onClick={handleReset}
+          className="bg-[#bc2635] text-white hover:bg-[#bc2635]/90"
+        >
+          Reset zoom
+        </Button>
+        <Button
+          onClick={handleClearSelection}
+          className="bg-[#bc2635] text-white hover:bg-[#bc2635]/90"
+        >
+          Clear selection
+        </Button>
+      </div>
+      <div className="outline outline-black rounded-lg flex-1">
+        <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />
+      </div>
+    </div>
+  );
 };
 
 export default Scatterplot;
