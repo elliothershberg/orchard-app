@@ -102,26 +102,41 @@ export default function TopicsPage() {
         </div>
         <div className="bg-white border rounded-lg min-h-[60px] p-4">
           {selectedTopics.length > 0 ? (
-            <ul className="list-none space-y-2">
-              {selectedTopics.map((topic, index) => (
-                <li
-                  key={index}
-                  className="group flex items-center justify-between gap-2 rounded-md px-2 py-1 hover:bg-gray-50"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#bc2635]"></div>
-                    <span className="text-sm font-medium">{topic}</span>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-                    onClick={() => handleTopicSelect(topic)}
-                  >
-                    <X className="h-3 w-3" />
-                  </Button>
-                </li>
-              ))}
+            <ul className="list-none space-y-3">
+              {selectedTopics.map((topic, index) => {
+                const broadTopic = broadTopics.find((bt) => bt.title === topic);
+                return (
+                  <li key={index}>
+                    <div className="group flex items-center justify-between gap-2 rounded-md px-2 py-1 hover:bg-gray-50">
+                      <div className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#bc2635]"></div>
+                        <span className="text-sm font-medium">{topic}</span>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                        onClick={() => handleTopicSelect(topic)}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                    {broadTopic && (
+                      <ul className="mt-1 ml-4 space-y-1">
+                        {broadTopic.specificTopics.map((specificTopic, idx) => (
+                          <li
+                            key={idx}
+                            className="flex items-center gap-2 px-2 py-0.5 text-sm text-muted-foreground"
+                          >
+                            <div className="h-1 w-1 rounded-full bg-[#bc2635]/50"></div>
+                            {specificTopic}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <p className="text-muted-foreground italic text-sm">
