@@ -23,14 +23,14 @@ export default function Home() {
             asChild
             className="w-full sm:w-auto sm:flex-1 bg-[#bc2635] text-white hover:bg-[#a61f2d]"
           >
-            <Link href="/scan">Scan the oRchard</Link>
+            <Link href="/study">Study a topic</Link>
           </Button>
           <Button
             asChild
             variant="outline"
             className="w-full sm:w-auto sm:flex-1 border-black text-black hover:bg-gray-100"
           >
-            <Link href="/topic">Study a topic</Link>
+            <Link href="/scan">Scan the oRchard</Link>
           </Button>
         </div>
 
