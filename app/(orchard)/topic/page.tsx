@@ -12,40 +12,7 @@ import TopicCard from "./topic-card";
 import SidePanel from "./side-panel";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-
-const broadTopics = [
-  {
-    id: 1,
-    title: "Alzheimer's Disease",
-    specificTopics: ["Amyloid plaques", "Tau proteins", "Neuroinflammation"],
-  },
-  {
-    id: 2,
-    title: "Drosophila Biology",
-    specificTopics: [
-      "Gene expression",
-      "Developmental stages",
-      "Neurogenetics",
-    ],
-  },
-  {
-    id: 3,
-    title: "Quantum Computing",
-    specificTopics: ["Qubits", "Quantum entanglement", "Quantum algorithms"],
-  },
-];
-
-const specificTopics = [
-  "Amyloid plaques",
-  "Tau proteins",
-  "Neuroinflammation",
-  "Gene expression",
-  "Developmental stages",
-  "Neurogenetics",
-  "Qubits",
-  "Quantum entanglement",
-  "Quantum algorithms",
-];
+import { broadTopics, specificTopics } from "./topic-data";
 
 export default function TopicsPage() {
   const [topicType, setTopicType] = useState<"broad" | "specific">("broad");
