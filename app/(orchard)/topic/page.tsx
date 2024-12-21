@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -15,6 +16,7 @@ import { X } from "lucide-react";
 import { broadTopics, specificTopics } from "./topic-data";
 
 export default function TopicsPage() {
+  const router = useRouter();
   const [topicType, setTopicType] = useState<"broad" | "specific">("broad");
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -36,7 +38,7 @@ export default function TopicsPage() {
         </p>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
         <Select
           defaultValue={topicType}
           onValueChange={(value) => setTopicType(value as "broad" | "specific")}
@@ -49,6 +51,24 @@ export default function TopicsPage() {
             <SelectItem value="specific">Specific Topics</SelectItem>
           </SelectContent>
         </Select>
+        <Button
+          onClick={() => {
+            const params = new URLSearchParams();
+            selectedTopics.forEach((topic) => {
+              const broadTopic = broadTopics.find((bt) => bt.title === topic);
+              if (broadTopic) {
+                params.append("broad", topic);
+              } else {
+                params.append("specific", topic);
+              }
+            });
+            router.push(`/scan?${params.toString()}`);
+          }}
+          className="bg-[#bc2635] hover:bg-[#a61f2d] text-white"
+          disabled={selectedTopics.length === 0}
+        >
+          Scan selected topics
+        </Button>
       </div>
 
       <div className="rounded-xl border bg-card p-6 shadow-sm">
