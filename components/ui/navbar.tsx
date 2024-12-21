@@ -32,6 +32,15 @@ export function Navbar() {
               asChild
               variant="ghost"
               className={`text-black hover:text-white hover:bg-[#bc2635] ${
+                pathname === "/study" ? "bg-[#bc2635] text-white" : ""
+              }`}
+            >
+              <Link href="/study">Study</Link>
+            </Button>
+            <Button
+              asChild
+              variant="ghost"
+              className={`text-black hover:text-white hover:bg-[#bc2635] ${
                 pathname === "/scan" ? "bg-[#bc2635] text-white" : ""
               }`}
             >
