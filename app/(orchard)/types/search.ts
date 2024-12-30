@@ -23,6 +23,7 @@ export interface SearchResponse {
 export interface OrchardProjection {
   x: number;
   y: number;
+  id: number;
 }
 
 export interface OrchardProjectionResponse {

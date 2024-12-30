@@ -54,7 +54,8 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
 
       // Subscribe to selection events
       newScatterplot.subscribe("select", ({ points }) => {
-        setSelectedPoints(points);
+        const selectedIds = points.map((index: number) => plotData[index].id);
+        setSelectedPoints(selectedIds);
       });
 
       // Subscribe to deselection events
