@@ -2,6 +2,7 @@ import { neon } from "@neondatabase/serverless";
 import OrchardDisplay from "./orchard-display";
 import { OrchardProjection, OrchardProjectionResponse } from "../types/search";
 import { Metadata } from "next";
+import { cache } from "react";
 
 export const metadata: Metadata = {
   title: "Scan - oRchard",
@@ -11,15 +12,17 @@ export const metadata: Metadata = {
 // Create the database connection
 const sql = neon(process.env.DATABASE_URL!);
 
-async function getOrchardProjection(): Promise<OrchardProjectionResponse> {
-  const projection = (await sql`
+const getOrchardProjection = cache(
+  async (): Promise<OrchardProjectionResponse> => {
+    const projection = (await sql`
     SELECT x, y
     FROM public.orchard
     ORDER BY id
     LIMIT 100
   `) as OrchardProjection[]; // Limit to 100 points for development
-  return { results: projection };
-}
+    return { results: projection };
+  }
+);
 
 export default async function ScanPage() {
   const projection = await getOrchardProjection();

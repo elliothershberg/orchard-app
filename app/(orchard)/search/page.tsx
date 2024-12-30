@@ -1,5 +1,7 @@
 import SearchContent from "./search-content";
 import { Metadata } from "next";
+import { performSearch } from "../actions/search";
+import { SearchResponse } from "../types/search";
 
 export const metadata: Metadata = {
   title: "Search - oRchard",
@@ -9,9 +11,15 @@ export const metadata: Metadata = {
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { query?: string };
+  searchParams: Promise<{ query?: string }> | { query?: string };
 }) {
-  const query = searchParams.query || "";
+  const resolvedParams = await searchParams;
+  const query = resolvedParams.query || "";
+  let initialResults: SearchResponse | null = null;
+
+  if (query) {
+    initialResults = await performSearch(query);
+  }
 
   return (
     <div className="container max-w-3xl mx-auto py-8 px-4 min-h-full">
@@ -19,7 +27,7 @@ export default async function SearchPage({
         Search the o<span className="text-[#bc2635]">R</span>chard
       </h1>
 
-      <SearchContent initialQuery={query} />
+      <SearchContent initialQuery={query} initialResults={initialResults} />
     </div>
   );
 }

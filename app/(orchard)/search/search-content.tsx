@@ -8,13 +8,15 @@ import { SearchResponse } from "../types/search";
 
 export default function SearchContent({
   initialQuery = "",
+  initialResults = null,
 }: {
   initialQuery: string;
+  initialResults: SearchResponse | null;
 }) {
   const [query, setQuery] = useState(initialQuery);
   const [isLoading, setIsLoading] = useState(false);
   const [searchResults, setSearchResults] = useState<SearchResponse | null>(
-    null
+    initialResults
   );
 
   const handleSearch = async (searchQuery: string) => {
