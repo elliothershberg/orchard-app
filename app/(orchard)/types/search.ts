@@ -13,6 +13,7 @@ export interface SearchResult {
   topic_depth_3: string;
   x: number;
   y: number;
+  id: number;
 }
 
 export interface SearchResponse {

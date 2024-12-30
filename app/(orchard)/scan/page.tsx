@@ -73,8 +73,6 @@ export default async function ScanPage(props: {
   const searchParams = await props.searchParams;
   const broad = searchParams?.broad || "";
   const specific = searchParams?.specific || "";
-  console.log("Broad params:", broad);
-  console.log("Specific params:", specific);
 
   const projection = await getOrchardProjection(broad, specific);
   console.log("Number of results:", projection.results.length);

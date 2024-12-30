@@ -3,6 +3,7 @@ import { ResearchCard } from "@/components/ui/research-card";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -42,6 +43,27 @@ export default function SearchResults({
     URL.revokeObjectURL(url);
   };
 
+  const router = useRouter();
+
+  const handleScan = () => {
+    if (!results?.results) return;
+
+    // Get unique topic_depth_3 values
+    const uniqueTopics = [
+      ...new Set(results.results.map((r) => r.topic_depth_3).filter(Boolean)),
+    ];
+
+    // Get all IDs
+    const ids = results.results.map((r) => r.id).filter(Boolean);
+
+    // Construct URL with parameters
+    const params = new URLSearchParams();
+    params.set("specific", uniqueTopics.join(","));
+    params.set("id", ids.join(","));
+
+    router.push(`/scan?${params.toString()}`);
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-8">
@@ -77,16 +99,24 @@ export default function SearchResults({
         <h2 className="text-2xl font-bold">Search Results</h2>
         <p className="text-sm text-gray-600 mt-1">
           Showing {startIndex + 1}-{Math.min(endIndex, results.results.length)}{" "}
-          of {results.results.length} results (
-          <button
+          of {results.results.length} results
+        </p>
+        <div className="flex gap-2 mt-2">
+          <Button
             onClick={handleDownload}
             disabled={!results?.results?.length}
-            className="text-[#bc2635] hover:text-[#bc2635]/90 disabled:text-gray-400 disabled:hover:text-gray-400 font-normal"
+            className="bg-[#bc2635] text-white hover:bg-[#a61f2d] disabled:bg-gray-300"
           >
-            download
-          </button>
-          )
-        </p>
+            Download Preprints
+          </Button>
+          <Button
+            onClick={handleScan}
+            disabled={!results?.results?.length}
+            className="bg-[#bc2635] text-white hover:bg-[#a61f2d] disabled:bg-gray-300"
+          >
+            Scan Topics
+          </Button>
+        </div>
       </div>
 
       <div className="space-y-4">
