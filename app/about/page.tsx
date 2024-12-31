@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About - oRchard",
+  description: "About the oRchard",
+};
 
 export default function AboutPage() {
   return (
@@ -63,7 +69,7 @@ export default function AboutPage() {
             <br />
             <span className="text-right block">- Isaac Asimov (1963)</span>
           </blockquote>
-          <hr className="w-32 border-black my-8" />
+          <hr className="w-32 border-black mt-8" />
           <div className="w-full space-y-6 text-gray-700 text-lg leading-relaxed py-8">
             <p>
               Founded in 2013,{" "}
