@@ -134,9 +134,12 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
                 <br />
                 <br />
                 The plot can zoom and pan. Click and drag on the plot while
-                holding shift to select multiple points. Selected points will be
-                highlighted and their corresponding papers will be shown in the
-                side panel.
+                holding{" "}
+                <kbd className="px-2 py-1 text-sm bg-gray-200 rounded">
+                  shift
+                </kbd>{" "}
+                to select multiple points. Selected points will be highlighted
+                and their corresponding papers will be shown in the side panel.
               </p>
             </PopoverContent>
           </Popover>
