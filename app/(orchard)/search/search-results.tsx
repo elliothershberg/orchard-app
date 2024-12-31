@@ -15,6 +15,7 @@ export default function SearchResults({
   isLoading: boolean;
 }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isScanning, setIsScanning] = useState(false);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -47,6 +48,7 @@ export default function SearchResults({
 
   const handleScan = () => {
     if (!results?.results) return;
+    setIsScanning(true);
 
     // Get unique topic_depth_3 values
     const uniqueTopics = [
@@ -111,10 +113,17 @@ export default function SearchResults({
           </Button>
           <Button
             onClick={handleScan}
-            disabled={!results?.results?.length}
+            disabled={!results?.results?.length || isScanning}
             className="bg-[#bc2635] text-white hover:bg-[#a61f2d] disabled:bg-gray-300"
           >
-            Scan Topics
+            {isScanning ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Scanning...
+              </>
+            ) : (
+              "Scan Topics"
+            )}
           </Button>
         </div>
       </div>
