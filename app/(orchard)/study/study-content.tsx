@@ -54,14 +54,25 @@ export default function StudyContent() {
         <Button
           onClick={() => {
             const params = new URLSearchParams();
+            const broadTopicsSelected: string[] = [];
+            const specificTopicsSelected: string[] = [];
+
             selectedTopics.forEach((topic) => {
               const broadTopic = broadTopics.find((bt) => bt.title === topic);
               if (broadTopic) {
-                params.append("broad", topic);
+                broadTopicsSelected.push(topic);
               } else {
-                params.append("specific", topic);
+                specificTopicsSelected.push(topic);
               }
             });
+
+            if (broadTopicsSelected.length > 0) {
+              params.set("broad", broadTopicsSelected.join(","));
+            }
+            if (specificTopicsSelected.length > 0) {
+              params.set("specific", specificTopicsSelected.join(","));
+            }
+
             router.push(`/scan?${params.toString()}`);
           }}
           className="bg-[#bc2635] hover:bg-[#a61f2d] text-white"
