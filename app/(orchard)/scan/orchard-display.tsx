@@ -43,7 +43,7 @@ export default function OrchardDisplay({
           <Button
             onClick={handleDownload}
             disabled={data.length === 0}
-            className="w-1/4 bg-[#bc2635] text-white hover:bg-[#bc2635]/90 disabled:bg-gray-200 disabled:text-gray-500 disabled:hover:bg-gray-200 disabled:hover:text-gray-500"
+            className="bg-[#bc2635] text-white hover:bg-[#bc2635]/90 disabled:bg-gray-200 disabled:text-gray-500 disabled:hover:bg-gray-200 disabled:hover:text-gray-500"
           >
             Download preprints
           </Button>
