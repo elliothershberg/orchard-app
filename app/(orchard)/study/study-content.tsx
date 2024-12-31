@@ -14,6 +14,12 @@ import SidePanel from "./side-panel";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { broadTopics, specificTopics } from "./topic-data";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 
 export default function StudyContent() {
   const router = useRouter();
@@ -39,18 +45,37 @@ export default function StudyContent() {
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
-        <Select
-          defaultValue={topicType}
-          onValueChange={(value) => setTopicType(value as "broad" | "specific")}
-        >
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Select topic type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="broad">Broad Topics</SelectItem>
-            <SelectItem value="specific">Specific Topics</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-2">
+          <Select
+            defaultValue={topicType}
+            onValueChange={(value) =>
+              setTopicType(value as "broad" | "specific")
+            }
+          >
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Select topic type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="broad">Broad Topics</SelectItem>
+              <SelectItem value="specific">Specific Topics</SelectItem>
+            </SelectContent>
+          </Select>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button type="button" variant="ghost" className="h-8 w-8 p-0">
+                <QuestionMarkCircledIcon className="h-5 w-5 text-gray-500" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <p>
+                Topics are derived from a topic model constructed over the Nomic
+                embedding of bioRxiv. Broad topics consist of larger portions of
+                the embedding, providing a superset of more specific topics. The
+                topic model can make mistakes.
+              </p>
+            </PopoverContent>
+          </Popover>
+        </div>
         <Button
           onClick={() => {
             const params = new URLSearchParams();
