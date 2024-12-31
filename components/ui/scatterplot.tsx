@@ -47,6 +47,7 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
         pointColor: [0, 0, 0, 1],
         backgroundColor: [1, 1, 1, 1],
         showReticle: true,
+        opacityBy: "density" as any, // eslint-disable-line @typescript-eslint/no-explicit-any
       });
 
       // Store the scatterplot instance
@@ -64,12 +65,7 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
       });
 
       // Format is [x, y, valueA, opacity]
-      const points = plotData.map((result) => [
-        result.x,
-        result.y,
-        0, // valueA - could be used for coloring based on some property
-        1, // opacity
-      ]);
+      const points = plotData.map((result) => [result.x, result.y]);
 
       newScatterplot.set({
         colorBy: "valueA",
