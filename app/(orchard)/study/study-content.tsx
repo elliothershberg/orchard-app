@@ -12,7 +12,7 @@ import {
 import TopicCard from "./topic-card";
 import SidePanel from "./side-panel";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
 import { broadTopics, specificTopics } from "./topic-data";
 import {
   Popover,
@@ -26,6 +26,7 @@ export default function StudyContent() {
   const [topicType, setTopicType] = useState<"broad" | "specific">("broad");
   const [selectedTopic, setSelectedTopic] = useState<number | null>(null);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleTopicSelect = (title: string) => {
     setSelectedTopics((prev) =>
@@ -78,6 +79,7 @@ export default function StudyContent() {
         </div>
         <Button
           onClick={() => {
+            setIsNavigating(true);
             const params = new URLSearchParams();
             const broadTopicsSelected: string[] = [];
             const specificTopicsSelected: string[] = [];
@@ -101,9 +103,13 @@ export default function StudyContent() {
             router.push(`/scan?${params.toString()}`);
           }}
           className="bg-[#bc2635] hover:bg-[#a61f2d] text-white"
-          disabled={selectedTopics.length === 0}
+          disabled={selectedTopics.length === 0 || isNavigating}
         >
-          Scan selected topics
+          {isNavigating ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            "Scan selected topics"
+          )}
         </Button>
       </div>
 
