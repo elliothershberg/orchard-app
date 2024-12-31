@@ -3,6 +3,12 @@
 import React, { useRef, useEffect } from "react";
 import { OrchardProjection } from "@/app/(orchard)/types/search";
 import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 
 interface ScatterplotProps {
   plotData: OrchardProjection[];
@@ -106,12 +112,35 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
         >
           Reset zoom
         </Button>
-        <Button
-          onClick={handleClearSelection}
-          className="bg-[#bc2635] text-white hover:bg-[#bc2635]/90"
-        >
-          Clear selection
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={handleClearSelection}
+            className="bg-[#bc2635] text-white hover:bg-[#bc2635]/90"
+          >
+            Clear selection
+          </Button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button type="button" variant="ghost" className="h-8 w-8 p-0">
+                <QuestionMarkCircledIcon className="h-5 w-5 text-gray-500" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <p>
+                This is an interactive scatterplot displaying a 2D projection of
+                the Nomic embedding of bioRxiv. Points that are closer to each
+                other are nearer in embedding space, indicating semantic
+                similarity.
+                <br />
+                <br />
+                The plot can zoom and pan. Click and drag on the plot while
+                holding shift to select multiple points. Selected points will be
+                highlighted and their corresponding papers will be shown in the
+                side panel.
+              </p>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
       <div className="outline outline-black rounded-lg flex-1">
         <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />
