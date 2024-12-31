@@ -58,8 +58,7 @@ const getOrchardProjection = cache(
       SELECT x, y, id
       FROM public.orchard
       ORDER BY id
-      LIMIT 100
-    `) as OrchardProjection[]; // Limit to 100 results for development
+    `) as OrchardProjection[];
     return { results: projection };
   }
 );
