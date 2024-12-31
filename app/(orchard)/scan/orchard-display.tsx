@@ -61,9 +61,7 @@ export default function OrchardDisplay({
               </p>
             </div>
           ) : (
-            data
-              .slice(0, 10)
-              .map((paper) => <ResearchCard key={paper.doi} {...paper} />)
+            data.map((paper) => <ResearchCard key={paper.doi} {...paper} />)
           )}
         </div>
       </div>
