@@ -41,7 +41,6 @@ export function ResearchCard({
   category,
   abstract,
   published,
-  topic_depth_1,
   topic_depth_2,
   topic_depth_3,
 }: ResearchCardProps) {
@@ -57,7 +56,7 @@ export function ResearchCard({
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-2">
           <span className="px-2 py-1 text-xs font-semibold bg-black text-white rounded-full">
-            {topic_depth_1}
+            {category}
           </span>
           <span className="px-2 py-1 text-xs font-semibold bg-[#bc2635] text-white rounded-full">
             {topic_depth_2}
@@ -78,9 +77,10 @@ export function ResearchCard({
             </PopoverTrigger>
             <PopoverContent className="w-fit">
               <p>
-                These are learned topics based on the embeddings of all of
-                bioRxiv. They are of increasing granularity, from general to
-                specific.
+                The first topic is the category of bioRxiv where the paper was
+                submitted. The second topic is the broad topic from the Nomic
+                topic model. The third topic is the specific topic from the
+                topic model. The topic model can make categerization mistakes.
               </p>
             </PopoverContent>
           </Popover>
@@ -97,9 +97,6 @@ export function ResearchCard({
           <p className="text-sm">
             <span className="font-semibold">Date:</span>{" "}
             {new Date(date).toLocaleDateString()}
-          </p>
-          <p className="text-sm">
-            <span className="font-semibold">bioRxiv category:</span> {category}
           </p>
           <p className="text-sm">
             <span className="font-semibold">Published:</span> {published}
