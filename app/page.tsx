@@ -37,7 +37,7 @@ export default function Home() {
         <div className="mt-16">
           <Link
             href="/about"
-            className="text-sm text-gray-600 hover:text-[#bc2635] transition-colors"
+            className="text-xl text-gray-600 hover:text-[#bc2635] transition-colors"
           >
             About
           </Link>
