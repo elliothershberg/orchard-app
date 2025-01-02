@@ -3,6 +3,7 @@ import OrchardDisplay from "./orchard-display";
 import { OrchardProjection, OrchardProjectionResponse } from "../types/search";
 import { Metadata } from "next";
 import { cache } from "react";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Scan - oRchard",
@@ -69,6 +70,20 @@ export default async function ScanPage(props: {
     specific?: string;
   }>;
 }) {
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "";
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
+
+  if (isMobile) {
+    return (
+      <main className="flex flex-col items-center justify-center p-8 bg-white h-[calc(100vh-4rem)]">
+        <div className="text-center text-lg">
+          The Scan page is currently not optimized for mobile use.
+        </div>
+      </main>
+    );
+  }
+
   const searchParams = await props.searchParams;
   const broad = searchParams?.broad || "";
   const specific = searchParams?.specific || "";
