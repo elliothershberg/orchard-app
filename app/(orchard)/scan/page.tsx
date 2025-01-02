@@ -76,11 +76,11 @@ export default async function ScanPage(props: {
 
   if (isMobile) {
     return (
-      <main className="flex flex-col items-center justify-center p-8 bg-white h-[calc(100vh-4rem)]">
+      <div className="flex flex-col items-center justify-center p-8 bg-white h-[calc(100vh-4rem)]">
         <div className="text-center text-lg">
           The Scan page is currently not optimized for mobile use.
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -92,10 +92,10 @@ export default async function ScanPage(props: {
   console.log("Number of results:", projection.results.length);
 
   return (
-    <main className="flex flex-col items-center p-8 bg-white h-[calc(100vh-4rem)]">
+    <div className="flex flex-col items-center p-8 bg-white h-[calc(100vh-4rem)]">
       <div className="w-full h-full">
         <OrchardDisplay projection={projection.results} />
       </div>
-    </main>
+    </div>
   );
 }
