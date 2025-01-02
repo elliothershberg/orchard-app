@@ -4,6 +4,7 @@ import { OrchardProjection, OrchardProjectionResponse } from "../types/search";
 import { Metadata } from "next";
 import { cache } from "react";
 import { headers } from "next/headers";
+import { executeQueryWithRetry } from "@/lib/retry";
 
 export const metadata: Metadata = {
   title: "Scan - oRchard",
@@ -18,49 +19,57 @@ const getOrchardProjection = cache(
     broad: string,
     specific: string
   ): Promise<OrchardProjectionResponse> => {
-    // Handle different filter combinations
-    if (broad && specific) {
-      const broadTopics = broad.split(",");
-      const specificTopics = specific.split(",");
-      const projection = (await sql`
+    try {
+      // Handle different filter combinations
+      if (broad && specific) {
+        const broadTopics = broad.split(",");
+        const specificTopics = specific.split(",");
+        const projection = (await executeQueryWithRetry(sql`
+          SELECT x, y, id
+          FROM public.orchard
+          WHERE topic_depth_2 = ANY(${broadTopics})
+          OR topic_depth_3 = ANY(${specificTopics})
+          ORDER BY id
+        `)) as OrchardProjection[];
+        return { results: projection };
+      }
+
+      if (broad) {
+        const broadTopics = broad.split(",");
+        const projection = (await executeQueryWithRetry(sql`
+          SELECT x, y, id
+          FROM public.orchard
+          WHERE topic_depth_2 = ANY(${broadTopics})
+          ORDER BY id
+        `)) as OrchardProjection[];
+        return { results: projection };
+      }
+
+      if (specific) {
+        const specificTopics = specific.split(",");
+        const projection = (await executeQueryWithRetry(sql`
+          SELECT x, y, id
+          FROM public.orchard
+          WHERE topic_depth_3 = ANY(${specificTopics})
+          ORDER BY id
+        `)) as OrchardProjection[];
+        return { results: projection };
+      }
+
+      // No filters
+      const projection = (await executeQueryWithRetry(sql`
         SELECT x, y, id
         FROM public.orchard
-        WHERE topic_depth_2 = ANY(${broadTopics})
-        OR topic_depth_3 = ANY(${specificTopics})
         ORDER BY id
-      `) as OrchardProjection[];
+      `)) as OrchardProjection[];
       return { results: projection };
+    } catch (error) {
+      console.error("Error fetching orchard projection:", error);
+      return {
+        results: [],
+        error: "Failed to fetch data. Please try again later.",
+      };
     }
-
-    if (broad) {
-      const broadTopics = broad.split(",");
-      const projection = (await sql`
-        SELECT x, y, id
-        FROM public.orchard
-        WHERE topic_depth_2 = ANY(${broadTopics})
-        ORDER BY id
-      `) as OrchardProjection[];
-      return { results: projection };
-    }
-
-    if (specific) {
-      const specificTopics = specific.split(",");
-      const projection = (await sql`
-        SELECT x, y, id
-        FROM public.orchard
-        WHERE topic_depth_3 = ANY(${specificTopics})
-        ORDER BY id
-      `) as OrchardProjection[];
-      return { results: projection };
-    }
-
-    // No filters
-    const projection = (await sql`
-      SELECT x, y, id
-      FROM public.orchard
-      ORDER BY id
-    `) as OrchardProjection[];
-    return { results: projection };
   }
 );
 

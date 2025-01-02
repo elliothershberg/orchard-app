@@ -5,19 +5,23 @@ import SearchForm from "./search-form";
 import SearchResults from "./search-results";
 import { SearchResponse } from "../types/search";
 import useSWR from "swr";
+import { executeQueryWithRetry } from "@/lib/retry";
 
 const fetcher = async (_: string, query: string) => {
-  const response = await fetch("/api/search", {
+  const fetchPromise = fetch("/api/search", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ query }),
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return response.json();
   });
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  return response.json();
+
+  return executeQueryWithRetry(fetchPromise);
 };
 
 export default function SearchContent() {
