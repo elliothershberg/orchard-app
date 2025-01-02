@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      <div className="fixed top-0 left-0 right-0 z-50">
+      <div className="md:fixed top-0 left-0 right-0 z-50">
         <div className="p-4">
           <Link href="/" className="flex-shrink-0 flex items-center">
             <span className="text-2xl font-extrabold tracking-tight">
