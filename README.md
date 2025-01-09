@@ -12,8 +12,6 @@
 >
 > _- Isaac Asimov (1963)_
 
----
-
 Founded in 2013, [bioRxiv](https://www.biorxiv.org) has emerged as the de facto preprint server for the life sciences. It has gained widespread adoption across nearly every field of biological research. The number of preprints has grown exponentially—now totaling over 250,000 original studies. This represents a challenge and an opportunity.
 
 As Asimov beautifully described over sixty years ago, no scientist can ever explore the entire oRchard of science themselves. This firehose of new findings is evidence of this fact.
