@@ -170,7 +170,7 @@ export default function AboutPage() {
                 variant="outline"
                 className="gap-2 text-black hover:text-white hover:bg-[#bc2635] border-[#bc2635] group"
               >
-                <Link href="https://github.com/">
+                <Link href="https://github.com/elliothershberg/orchard-app/">
                   <svg
                     role="img"
                     viewBox="0 0 24 24"
